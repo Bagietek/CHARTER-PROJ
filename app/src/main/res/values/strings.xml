@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Charter</string>
+    <string name="saveButton">Zapisz</string>
+    <string name="loadDataButton">Wczytaj dane</string>
+    <string name="configureChartButton">Konfiguruj</string>
+    <string-array name="chart_types">
+        <item>Wykres liniowy</item>
+        <item>Wykres słupkowy</item>
+        <item>Wykres kołowy</item>
+        <item>Wykres radarowy</item>
+    </string-array>
 </resources>

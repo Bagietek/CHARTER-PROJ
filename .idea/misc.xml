@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3425" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3425" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/actionbar.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/activity_bar_display.xml" value="0.3265625" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/activity_chart_dispaly.xml" value="0.340625" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/activity_pie_display.xml" value="0.340625" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/activity_radar_display.xml" value="0.340625" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/layout/toolbar.xml" value="0.3353846153846154" />
+        <entry key="..\:/Users/Bartek/Desktop/SM-PROJ/app/src/main/res/menu/mainmenu.xml" value="0.340625" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

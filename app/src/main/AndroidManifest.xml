@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Charter">
         <activity
+            android:name=".radarDisplayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pieDisplayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".barDisplayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lineDispalyActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
