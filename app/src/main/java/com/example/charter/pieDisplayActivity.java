@@ -3,12 +3,15 @@ package com.example.charter;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -62,8 +65,11 @@ public class pieDisplayActivity extends AppCompatActivity {
         //showing the value of the entries, default true if not set
         pieData.setDrawValues(true);
 
+
+
         pieChart.setData(pieData);
         pieChart.invalidate();
+        updateConfig();
     }
 
     // menu icons
@@ -72,5 +78,43 @@ public class pieDisplayActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         return true;
+    }
+
+    public void updateConfig(){
+        Bundle extras = getIntent().getExtras();
+        //pieChart.setUsePercentValues(findViewById(R.id.usePercent).isActivated());
+        if(extras!=null){
+            pieChart.setUsePercentValues(extras.getBoolean("percentageValue"));
+
+            if(extras.getBoolean("percentageValue")){
+
+                Description dsc = new Description();
+                dsc.setText("testing");
+                pieChart.setDescription(dsc);
+            }
+        }
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.saveButton:
+
+                return true;
+
+            case R.id.configureButton:
+                intent = new Intent(this,pieConfigActivity.class);
+                startActivityForResult(intent,5);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }
