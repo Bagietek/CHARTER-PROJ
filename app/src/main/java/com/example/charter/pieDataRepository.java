@@ -10,21 +10,44 @@ import java.util.Map;
 
 public class pieDataRepository {
     private static pieDataRepository instance;
-    ArrayList<PieEntry> entries = new ArrayList<>();
-    Map<String, Integer> typeAmountMap = new HashMap<>();
-    ArrayList<Integer> colors = new ArrayList<>();
+    ArrayList<PieEntry> entries;
+    Map<String, Integer> typeAmountMap;
+    ArrayList<Integer> colors;
 
     protected pieDataRepository() {
-
+        entries = new ArrayList<>();
+        typeAmountMap = new HashMap<>();
+        colors = new ArrayList<>();
     }
 
-    public pieDataRepository getInstance(){
+    public static pieDataRepository getInstance(){
         if(instance == null){
             instance = new pieDataRepository();
         }
         return instance;
     }
 
+    public ArrayList<PieEntry> getEntries() {
+        return entries;
+    }
 
+    public void setEntries(ArrayList<PieEntry> entries) {
+        this.entries = entries;
+    }
 
+    public Map<String, Integer> getTypeAmountMap() {
+        return typeAmountMap;
+    }
+
+    public void setTypeAmountMap(Map<String, Integer> typeAmountMap) {
+        this.typeAmountMap = typeAmountMap;
+    }
+
+    public ArrayList<Integer> getColors() {
+        return colors;
+    }
+
+    public void setColors(ArrayList<Integer> colors) {
+        this.colors = colors;
+    }
 }

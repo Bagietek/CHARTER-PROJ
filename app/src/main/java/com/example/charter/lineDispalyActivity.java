@@ -48,7 +48,7 @@ public class lineDispalyActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-
+                //todo:save button
                 return true;
 
             case R.id.configureButton:
@@ -73,16 +73,17 @@ public class lineDispalyActivity extends AppCompatActivity {
                 // chart description
                 lineChart.getDescription().setText(data.getStringExtra("dsc"));
                 // line title
-                lineChart.getData().getDataSetByIndex(0).setLabel(data.getStringExtra("lineTitle"));
+               // lineChart.getData().getDataSetByIndex(0).setLabel(data.getStringExtra("lineTitle"));
                 for (int i=0;i<lineDataRepository.getInstance().chartData.getDataSetCount();i++){
                     lineChart.getData().getDataSetByIndex(i).setLabel(data.getStringExtra("lineTitle"+i));
+                    lineChart.getData().getDataSetByIndex(i).setValueTextSize(data.getFloatExtra("fontSize",8f));
                 }
                 // font colour for a line
                 //lineChart.getData().getDataSetByIndex(0).setValueTextColor(Color.YELLOW);
                 // filling
                 //lineChart.getData().getDataSetByIndex(0).setDrawFilled(true);
                 // font size
-                lineChart.getData().getDataSetByIndex(0).setValueTextSize(data.getFloatExtra("fontSize",8f));
+
                 lineChart.notifyDataSetChanged();
                 lineChart.invalidate();
 

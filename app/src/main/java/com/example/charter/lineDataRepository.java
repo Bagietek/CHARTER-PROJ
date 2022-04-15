@@ -34,7 +34,6 @@ public class lineDataRepository {
     }
 
     public static void loadData(LineData _chartData){
-        // todo: constructor that pulls data from file
         if(instance == null){
             instance = new lineDataRepository();
         }

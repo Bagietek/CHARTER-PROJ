@@ -1,0 +1,21 @@
+{
+	"type":"pie",
+	"lines":[
+	{
+		"colour":"yellow",
+		"name":"krzesła",
+		"y":"500"
+	},
+	{
+		"colour":"red",
+		"name":"stoły",
+		"y":"200"
+	},
+	{
+		"colour":"blue",
+		"name":"taborety",
+		"y":"100"
+	}
+	]
+	
+}

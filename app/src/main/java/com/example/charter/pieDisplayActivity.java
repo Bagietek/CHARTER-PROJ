@@ -1,8 +1,10 @@
 package com.example.charter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import java.util.Map;
 
 public class pieDisplayActivity extends AppCompatActivity {
     PieChart pieChart;
+    final int editCode = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,46 +33,18 @@ public class pieDisplayActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.maintoolbar);
         setSupportActionBar(toolbar);
         pieChart = findViewById(R.id.pieChart_view);
-        // todo: move to repository
-        // temp static chart
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        Map<String, Integer> typeAmountMap = new HashMap<>();
-        typeAmountMap.put("Toys",200);
-        typeAmountMap.put("Snacks",230);
-        typeAmountMap.put("Clothes",100);
-        typeAmountMap.put("Stationary",500);
-        typeAmountMap.put("Phone",50);
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.parseColor("#304567"));
-        colors.add(Color.parseColor("#309967"));
-        colors.add(Color.parseColor("#476567"));
-        colors.add(Color.parseColor("#890567"));
-        colors.add(Color.parseColor("#a35567"));
-        colors.add(Color.parseColor("#ff5f67"));
-        colors.add(Color.parseColor("#3ca567"));
-
-        //input data and fit data into pie chart entry
-        for(String type: typeAmountMap.keySet()){
-            entries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
-        }
-
         //collecting the entries with label name
-        PieDataSet pieDataSet = new PieDataSet(entries,"Static testing chart");
+        PieDataSet pieDataSet = new PieDataSet(pieDataRepository.getInstance().getEntries(), "");
         //setting text size of the value
         pieDataSet.setValueTextSize(12f);
         //providing color list for coloring different entries
-        pieDataSet.setColors(colors);
+        pieDataSet.setColors(pieDataRepository.getInstance().getColors());
         //grouping the data set from entry to chart
         PieData pieData = new PieData(pieDataSet);
         //showing the value of the entries, default true if not set
         pieData.setDrawValues(true);
-
-
-
         pieChart.setData(pieData);
         pieChart.invalidate();
-        updateConfig();
     }
 
     // menu icons
@@ -80,21 +55,23 @@ public class pieDisplayActivity extends AppCompatActivity {
         return true;
     }
 
-    public void updateConfig(){
-        Bundle extras = getIntent().getExtras();
-        //pieChart.setUsePercentValues(findViewById(R.id.usePercent).isActivated());
-        if(extras!=null){
-            pieChart.setUsePercentValues(extras.getBoolean("percentageValue"));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            if(extras.getBoolean("percentageValue")){
-
+        if(requestCode == editCode && resultCode == Activity.RESULT_OK){
+                // show percentage values
+                pieChart.setUsePercentValues(data.getBooleanExtra("percentageValue",false));
+                // set description
                 Description dsc = new Description();
-                dsc.setText("testing");
+                dsc.setText(data.getStringExtra("dsc"));
+                for (int i=0;i<pieChart.getData().getDataSetCount();i++){
+                    pieChart.getData().getDataSetByIndex(i).setValueTextSize(data.getFloatExtra("font",8f));
+                }
                 pieChart.setDescription(dsc);
-            }
+                pieChart.notifyDataSetChanged();
+                pieChart.invalidate();
         }
-
-
     }
 
     @Override
@@ -102,12 +79,12 @@ public class pieDisplayActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-
+                //todo:save button
                 return true;
 
             case R.id.configureButton:
                 intent = new Intent(this,pieConfigActivity.class);
-                startActivityForResult(intent,5);
+                startActivityForResult(intent,editCode);
                 return true;
 
             default:

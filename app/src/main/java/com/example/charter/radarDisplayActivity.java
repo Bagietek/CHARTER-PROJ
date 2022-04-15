@@ -57,5 +57,6 @@ public class radarDisplayActivity extends AppCompatActivity {
         inflater.inflate(R.menu.mainmenu, menu);
         return true;
     }
-
+    //todo:save button
+    //todo: configuration options
 }

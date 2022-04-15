@@ -24,9 +24,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONArray;
@@ -45,6 +48,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.acl.Permission;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Button loadData;
@@ -118,10 +123,76 @@ public class MainActivity extends AppCompatActivity {
                 }
                 try{
                     JSONObject jsonObject = new JSONObject(jsonData);
+                    JSONArray array;
+                    Intent intent;
 
                     switch(jsonObject.getString("type")){
+                        case "radar":
+                            // todo: rest of charts
+                            break;
+                        case "bar":
+                            barDataRepository.getInstance().clear();
+                            array = jsonObject.getJSONArray("lines");
+                            if(array.length() > 3){
+                                Toast.makeText(MainActivity.this,"Corrupted data",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            //ArrayList<Double> values = new ArrayList<>();
+                            for (int i=0;i<array.length();i++){
+                                ArrayList<BarEntry> entriesBar = new ArrayList<>();
+                                JSONObject tmp = new JSONObject(array.get(i).toString());
+                                JSONArray arrayYBar = tmp.getJSONArray("y");
+                                for (int j=0;j<arrayYBar.length();j++){
+                                    //values.add(arrayYBar.getDouble(j));
+                                    entriesBar.add(new BarEntry(j,Float.parseFloat(arrayYBar.getString(j))));
+                                }
+                                BarDataSet tmp2 = new BarDataSet(entriesBar,"");
+                                tmp2.setColor(Color.parseColor(tmp.getString("colour")));
+                                barDataRepository.getInstance().getDataSets().add(tmp2);
+                            }
+                            barDataRepository.calculateSpace(array.length());
+
+                            intent = new Intent(this,barDisplayActivity.class);
+                            startActivityForResult(intent,2);
+                            /*ArrayList<BarEntry> entriesBar = new ArrayList<>();
+                            JSONArray arrayXbar = bar.getJSONArray("x");
+                            JSONArray arrayYbar = bar.getJSONArray("y");
+                            if(arrayXbar.length() != arrayYbar.length()){
+                                Toast.makeText(MainActivity.this,"Corrupted data",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            for (int i=0;i<arrayXbar.length();i++){
+                                entriesBar.add(new BarEntry(arrayXbar.getInt(i),Float.parseFloat(arrayYbar.getString(i))));
+                            }
+                            barDataRepository.getInstance().setEntries(entriesBar);
+                            BarDataSet barDataSet = new BarDataSet(entriesBar,"");
+                            barDataSet.setColor(Color.parseColor(bar.getString("colour")));
+                            barDataRepository.getInstance().setBarDataSet(barDataSet);
+                            intent = new Intent(this,barDisplayActivity.class);
+                            startActivityForResult(intent,2);*/
+                            break;
+                        case "pie":
+                            array = jsonObject.getJSONArray("lines");
+
+                            Map<String, Integer> typeAmountMap = new HashMap<>();
+                            ArrayList<Integer> colors = new ArrayList<>();
+                            for (int i =0;i<array.length();i++){
+                                JSONObject temp = new JSONObject(array.get(i).toString());
+                                typeAmountMap.put(temp.getString("name"),temp.getInt("y"));
+                                colors.add(Color.parseColor(temp.getString("colour")));
+                            }
+                            ArrayList<PieEntry> entries = new ArrayList<>();
+                            for(String type: typeAmountMap.keySet()){
+                                entries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
+                            }
+                            pieDataRepository.getInstance().setEntries(entries);
+                            pieDataRepository.getInstance().setColors(colors);
+                            pieDataRepository.getInstance().setTypeAmountMap(typeAmountMap);
+                            intent = new Intent(this,pieDisplayActivity.class);
+                            startActivityForResult(intent,3);
+                            break;
                         case "line":
-                            JSONArray array = jsonObject.getJSONArray("lines");
+                            array = jsonObject.getJSONArray("lines");
                             ArrayList<ILineDataSet> lineData = new ArrayList<>();
 
                             LineData setData;
@@ -149,10 +220,11 @@ public class MainActivity extends AppCompatActivity {
                             setData = new LineData(lineData);
                             lineDataRepository.loadData(setData);
                             // moving to chart
-                            Intent intent = new Intent(this, lineDispalyActivity.class);
+                            intent = new Intent(this, lineDispalyActivity.class);
                             startActivityForResult(intent,1);
                             break;
                         default:
+                            Toast.makeText(MainActivity.this,"Nie wspierany typ danych",Toast.LENGTH_SHORT).show();
                             return;
                     }
                 }catch (JSONException ex){

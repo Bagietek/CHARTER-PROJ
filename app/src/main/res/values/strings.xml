@@ -6,6 +6,9 @@
     <string name="submitConfigButton">Zatwierdź</string>
     <string name="cancelButton">Anuluj</string>
     <string name="percentValuesOption">Użyj wartości procentowych</string>
+    <string name="notSupported">Nie wspierany typ danych</string>
+    <string name="fontSize">Rozmiar czcionki</string>
+    <string name="description">Opis wykresu</string>
     <string-array name="chart_types">
         <item>Wykres liniowy</item>
         <item>Wykres słupkowy</item>
