@@ -16,9 +16,9 @@ public class lineDataRepository {
     LineData chartData;
 
 
-    // static constr
+
     protected lineDataRepository(){
-        chartRawData = new ArrayList<>();
+        /*chartRawData = new ArrayList<>();
         for (int i=0;i<50;i++){
             chartRawData.add(new Entry(i,i));
         }
@@ -27,15 +27,22 @@ public class lineDataRepository {
         lineData.add(set1);
         //set1.setColor(Color.BLACK);
         chartData = new LineData(lineData);
-
+        */
+        chartData = new LineData();
+        chartRawData = new ArrayList<>();
+        lineData = new ArrayList<>();
     }
 
-    public void loadData(){
+    public static void loadData(LineData _chartData){
         // todo: constructor that pulls data from file
+        if(instance == null){
+            instance = new lineDataRepository();
+        }
+        instance.setChartData(_chartData);
     }
 
     // singleton for data
-    public lineDataRepository getInstance(){
+    public static lineDataRepository getInstance(){
         if(instance == null){
             instance = new lineDataRepository();
         }
@@ -67,5 +74,10 @@ public class lineDataRepository {
     public LineData getChartData() {
         return chartData;
     }
+
+    public void setChartData(LineData chartData) {
+        this.chartData = chartData;
+    }
+
 
 }

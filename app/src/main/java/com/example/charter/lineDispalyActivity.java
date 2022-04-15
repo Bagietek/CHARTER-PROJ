@@ -41,8 +41,8 @@ public class lineDispalyActivity extends AppCompatActivity {
         LineData data = new LineData(dataSets);*/
 
 
-        lineDataRepository data = new lineDataRepository();
-        lineChart.setData(data.getChartData());
+        //lineDataRepository data = new lineDataRepository();
+        lineChart.setData(lineDataRepository.getInstance().getChartData());
         //lineChart.getLegend().setEnabled(false);
     }
 
