@@ -27,23 +27,11 @@ public class lineDispalyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chart_dispaly);
         Toolbar toolbar = findViewById(R.id.maintoolbar);
         setSupportActionBar(toolbar);
-
         // line chart
         lineChart = findViewById(R.id.chart1);
         lineChart.setBackgroundColor(Color.WHITE);
-        /*ArrayList<Entry> values = new ArrayList<>();
-        for (int i=0;i<50;i++){
-            values.add(new Entry(i,i));
-        }
-        LineDataSet set1 = new LineDataSet(values,"sin(x)");
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-        LineData data = new LineData(dataSets);*/
-
-
-        //lineDataRepository data = new lineDataRepository();
         lineChart.setData(lineDataRepository.getInstance().getChartData());
-        //lineChart.getLegend().setEnabled(false);
+
     }
 
 
@@ -86,13 +74,15 @@ public class lineDispalyActivity extends AppCompatActivity {
                 lineChart.getDescription().setText(data.getStringExtra("dsc"));
                 // line title
                 lineChart.getData().getDataSetByIndex(0).setLabel(data.getStringExtra("lineTitle"));
+                for (int i=0;i<lineDataRepository.getInstance().chartData.getDataSetCount();i++){
+                    lineChart.getData().getDataSetByIndex(i).setLabel(data.getStringExtra("lineTitle"+i));
+                }
                 // font colour for a line
                 //lineChart.getData().getDataSetByIndex(0).setValueTextColor(Color.YELLOW);
                 // filling
                 //lineChart.getData().getDataSetByIndex(0).setDrawFilled(true);
                 // font size
                 lineChart.getData().getDataSetByIndex(0).setValueTextSize(data.getFloatExtra("fontSize",8f));
-                //Log.d("dsc",data.getStringExtra("dsc"));
                 lineChart.notifyDataSetChanged();
                 lineChart.invalidate();
 

@@ -66,14 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // menu icon creation
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.mainmenu, menu);
-        return true;
-    }*/
-
     // file selector
     public void loadData(View view){
         // permission check
@@ -176,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // todo: remove i guess?
+    // todo: remove i guess? or change for random data
     public void genChart(View view){
         Intent intent;
         switch (chartTypes.getSelectedItem().toString()) {
@@ -199,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
+    // permission grant
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -207,7 +199,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this,"Permission granted",Toast.LENGTH_SHORT).show();
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
@@ -215,15 +206,19 @@ public class MainActivity extends AppCompatActivity {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Permission denied to read your storage", Toast.LENGTH_SHORT).show();
                 }
                 return;
         }
     }
 
-    public void permissionChange(View view){
-        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
-    }
 
+    // menu icon creation not used here
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }*/
 
 }
