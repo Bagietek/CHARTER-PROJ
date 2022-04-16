@@ -30,6 +30,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.data.RadarDataSet;
+import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONArray;
@@ -128,7 +131,33 @@ public class MainActivity extends AppCompatActivity {
 
                     switch(jsonObject.getString("type")){
                         case "radar":
-                            // todo: rest of charts
+                            radarDataRepository.getInstance().clearData();
+                            array = jsonObject.getJSONArray("labels");
+                            JSONArray lineArray = jsonObject.getJSONArray("lines");
+
+                            /*if(array.length() != lineArray.getJSONArray(0).getJSONArray(0).length()){
+                                Toast.makeText(MainActivity.this,"Corrupted data",Toast.LENGTH_SHORT).show();
+                                return;
+                            }*/
+                            ArrayList<String> labels = new ArrayList<>();
+                            for (int i=0;i<array.length();i++){
+                                labels.add(array.getString(i));
+                            }
+                            radarDataRepository.getInstance().setAxisFormat(new IndexAxisValueFormatter(labels));
+                            for (int i=0;i<lineArray.length();i++){
+                                JSONObject tmp = new JSONObject(lineArray.get(i).toString());
+                                JSONArray arrayY = tmp.getJSONArray("y");
+                                ArrayList<RadarEntry> dataValues = new ArrayList<>();
+                                for (int j=0;j<arrayY.length();j++){
+                                    dataValues.add(new RadarEntry(arrayY.getInt(j)));
+                                }
+                                RadarDataSet dataSet = new RadarDataSet(dataValues,"");
+                                dataSet.setColor(Color.parseColor(tmp.getString("colour")));
+                                dataSet.setFillColor(Color.parseColor(tmp.getString("colour")));
+                                radarDataRepository.getInstance().getRadarData().addDataSet(dataSet);
+                            }
+                            intent = new Intent(this,radarDisplayActivity.class);
+                            startActivityForResult(intent,4);
                             break;
                         case "bar":
                             barDataRepository.getInstance().clear();

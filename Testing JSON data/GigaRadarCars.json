@@ -1,0 +1,15 @@
+{
+	"type":"radar",
+	"labels":["BMW","Volkswagen","Volvo","Audi","Lamborghini"],
+	"lines":[
+	{
+		"colour":"black",
+		"y":["1","2","3","4","5"]
+	},
+	{
+		"colour":"blue",
+		"y":["5","4","3","2","1"]
+	}
+	]
+	
+}

@@ -8,9 +8,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -18,6 +20,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +28,7 @@ import java.util.Map;
 public class pieDisplayActivity extends AppCompatActivity {
     PieChart pieChart;
     final int editCode = 5;
+    private final int saveCode = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,24 @@ public class pieDisplayActivity extends AppCompatActivity {
                 pieChart.setDescription(dsc);
                 pieChart.notifyDataSetChanged();
                 pieChart.invalidate();
+        }else if(requestCode == saveCode){
+            if(resultCode == Activity.RESULT_OK){
+                String path = data.getStringExtra("path");
+                if(path.isEmpty()){
+                    Toast.makeText(this,"Błąd zapisywania",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                File file = new File( Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DCIM + "/" +  path+".png");
+                //Log.d("saveTest",file.getPath());
+                if(file.exists()){
+                    Toast.makeText(this,"Istnieje już zdjęcie o tej nazwie",Toast.LENGTH_LONG).show();
+                    //Log.d("saveTest","nie zapisaned");
+                    return;
+                }
+                pieChart.saveToGallery(path);
+                Toast.makeText(this,"Zapisano w galerii",Toast.LENGTH_SHORT).show();
+                //Log.d("saveTest","zapisaned");
+            }
         }
     }
 
@@ -79,7 +101,8 @@ public class pieDisplayActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                //todo:save button
+                intent = new Intent(this,saveActivity.class);
+                startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:

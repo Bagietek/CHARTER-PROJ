@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Charter">
         <activity
+            android:name=".saveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".radarConfigActivity"
+            android:exported="false" />
+        <activity
             android:name=".barConfigActivity"
             android:exported="false" />
         <activity

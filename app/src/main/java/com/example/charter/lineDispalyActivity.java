@@ -7,18 +7,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.LineData;
 
+import java.io.File;
+
 public class lineDispalyActivity extends AppCompatActivity {
     private final int editCode = 5;
+    private final int saveCode = 6;
     LineChart lineChart;
 
     @Override
@@ -48,7 +53,8 @@ public class lineDispalyActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                //todo:save button
+                intent = new Intent(this,saveActivity.class);
+                startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:
@@ -90,6 +96,24 @@ public class lineDispalyActivity extends AppCompatActivity {
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 // Write your code if there's no result
+            }
+        }else if(requestCode == saveCode){
+            if(resultCode == Activity.RESULT_OK){
+                String path = data.getStringExtra("path");
+                if(path.isEmpty()){
+                    Toast.makeText(this,"Błąd zapisywania",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                File file = new File( Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DCIM + "/" +  path+".png");
+                //Log.d("saveTest",file.getPath());
+                if(file.exists()){
+                    Toast.makeText(this,"Istnieje już zdjęcie o tej nazwie",Toast.LENGTH_LONG).show();
+                    //Log.d("saveTest","nie zapisaned");
+                    return;
+                }
+                lineChart.saveToGallery(path);
+                Toast.makeText(this,"Zapisano w galerii",Toast.LENGTH_SHORT).show();
+                //Log.d("saveTest","zapisaned");
             }
         }
     } //onActivityResult

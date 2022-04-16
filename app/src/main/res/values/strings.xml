@@ -9,6 +9,8 @@
     <string name="notSupported">Nie wspierany typ danych</string>
     <string name="fontSize">Rozmiar czcionki</string>
     <string name="description">Opis wykresu</string>
+    <string name="writePath">Podaj nazwę pliku</string>
+    <string name="saveSuccess">Zapisano w galerii!</string>
     <string-array name="chart_types">
         <item>Wykres liniowy</item>
         <item>Wykres słupkowy</item>

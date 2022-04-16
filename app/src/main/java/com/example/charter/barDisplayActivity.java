@@ -7,10 +7,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -20,11 +22,13 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class barDisplayActivity extends AppCompatActivity {
     BarChart barChart;
     private final int editCode = 10;
+    private final int saveCode = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,6 @@ public class barDisplayActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // todo: configuration options
         if (requestCode == editCode) {
             if(resultCode == Activity.RESULT_OK){
                 barChart.getDescription().setText(data.getStringExtra("dsc"));
@@ -75,6 +78,24 @@ public class barDisplayActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_CANCELED) {
                 // Write your code if there's no result
             }
+        }else if(requestCode == saveCode){
+            if(resultCode == Activity.RESULT_OK){
+                String path = data.getStringExtra("path");
+                if(path.isEmpty()){
+                    Toast.makeText(this,"Błąd zapisywania",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                File file = new File( Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DCIM + "/" +  path+".png");
+                //Log.d("saveTest",file.getPath());
+                if(file.exists()){
+                    Toast.makeText(this,"Istnieje już zdjęcie o tej nazwie",Toast.LENGTH_LONG).show();
+                    //Log.d("saveTest","nie zapisaned");
+                    return;
+                }
+                barChart.saveToGallery(path);
+                Toast.makeText(this,"Zapisano w galerii",Toast.LENGTH_SHORT).show();
+                //Log.d("saveTest","zapisaned");
+            }
         }
     } //onActivityResult
 
@@ -83,7 +104,8 @@ public class barDisplayActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                //todo:save button
+                intent = new Intent(this,saveActivity.class);
+                startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:
