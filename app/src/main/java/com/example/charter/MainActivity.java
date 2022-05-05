@@ -56,7 +56,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Button loadData;
-    Spinner chartTypes;
     private final int fileCode = 200;
 
     @Override
@@ -66,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.maintoolbar);
         setSupportActionBar(toolbar);
         loadData = findViewById(R.id.loadDataButton);
-        // spinner set up
-        chartTypes = findViewById(R.id.typeSelector);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.chart_types, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        chartTypes.setAdapter(adapter);
-
     }
 
     // file selector
@@ -269,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // todo: remove i guess? or change for random data
+  /*  // todo: remove i guess? or change for random data
     public void genChart(View view){
         Intent intent;
         switch (chartTypes.getSelectedItem().toString()) {
@@ -291,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-    }
+    }*/
     // permission grant
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
