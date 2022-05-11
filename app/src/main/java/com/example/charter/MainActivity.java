@@ -87,22 +87,38 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == fileCode) {
             if(resultCode == Activity.RESULT_OK){
                 Uri uri = data.getData();
-                File filePath = new File(uri.getPath());
+                /*File filePath = new File(uri.getPath());
                 // getting the actual file path
+
+
+
+                //
                 final String path[] = filePath.getPath().split(":");
-                String json = path[1];
-                String jsonData;
+                String json;
+                if(path.length > 1){
+                    json = path[1];
+                }else {
+                    json = "/storage/emulated/0/download/" + path[0];
+                }
+*/
+                /*if(!json.startsWith("/")){
+                    json = "/" + json;
+                }*/
+
+                //String json = filePath.getPath();
+                String jsonData = "";
 
                 try {
-
-                    Log.d("json",json);
-                    File file = new File(json);
+                    //Log.d("json",json);
+                    //Log.d("json",uri.getPath());
+                   /* File file = new File(json);
                     if(!file.canRead()){
                         Toast.makeText(MainActivity.this,"Reading error!",Toast.LENGTH_LONG).show();
                         return;
-                    }
+                    }*/
 
-                    FileInputStream fis = new FileInputStream(json);
+                    //FileInputStream fis = new FileInputStream(json);
+                    FileInputStream fis = new FileInputStream(this.getContentResolver().openFileDescriptor(uri,"r").getFileDescriptor());
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fis));
                     StringBuilder stringBuilder = new StringBuilder();
                     String line = bufferedReader.readLine();
@@ -115,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }catch(IOException ex) {
                     ex.printStackTrace();
+                    Toast.makeText(MainActivity.this,"Reading error!",Toast.LENGTH_LONG).show();
                     return;
                 }
                 try{
