@@ -1,4 +1,4 @@
-package com.example.charter;
+package com.example.charter.display;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -14,16 +13,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.charter.R;
+import com.example.charter.config.pieConfigActivity;
+import com.example.charter.repository.pieDataRepository;
+import com.example.charter.saveActivity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class pieDisplayActivity extends AppCompatActivity {
     PieChart pieChart;
@@ -101,12 +100,12 @@ public class pieDisplayActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                intent = new Intent(this,saveActivity.class);
+                intent = new Intent(this, saveActivity.class);
                 startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:
-                intent = new Intent(this,pieConfigActivity.class);
+                intent = new Intent(this, pieConfigActivity.class);
                 startActivityForResult(intent,editCode);
                 return true;
 

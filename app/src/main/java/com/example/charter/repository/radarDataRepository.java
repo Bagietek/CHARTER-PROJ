@@ -1,4 +1,4 @@
-package com.example.charter;
+package com.example.charter.repository;
 
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;

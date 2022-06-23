@@ -1,11 +1,10 @@
-package com.example.charter;
+package com.example.charter.display;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -14,16 +13,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.charter.R;
+import com.example.charter.repository.barDataRepository;
+import com.example.charter.config.barConfigActivity;
+import com.example.charter.saveActivity;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class barDisplayActivity extends AppCompatActivity {
     BarChart barChart;
@@ -104,12 +101,12 @@ public class barDisplayActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                intent = new Intent(this,saveActivity.class);
+                intent = new Intent(this, saveActivity.class);
                 startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:
-                intent = new Intent(this,barConfigActivity.class);
+                intent = new Intent(this, barConfigActivity.class);
                 startActivityForResult(intent,editCode);
                 return true;
 

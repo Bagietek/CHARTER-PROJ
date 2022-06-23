@@ -2,7 +2,7 @@
 	"type":"pie",
 	"lines":[
 	{
-		"colour":"yellow",
+		"colour":"green",
 		"name":"krzesła",
 		"y":"500"
 	},

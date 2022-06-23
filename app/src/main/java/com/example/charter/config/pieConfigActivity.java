@@ -1,4 +1,4 @@
-package com.example.charter;
+package com.example.charter.config;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.example.charter.R;
+import com.example.charter.display.pieDisplayActivity;
 
 public class pieConfigActivity extends AppCompatActivity {
     CheckBox percentValues;
@@ -26,7 +29,7 @@ public class pieConfigActivity extends AppCompatActivity {
         //PieChart pieChart = findViewById(R.id.pieChart_view);
         //pieChart.setUsePercentValues(findViewById(R.id.usePercent).isActivated());
 
-        Intent intent = new Intent(this,pieDisplayActivity.class);
+        Intent intent = new Intent(this, pieDisplayActivity.class);
         intent.putExtra("percentageValue",percentValues.isChecked());
         intent.putExtra("dsc",dsc.getText().toString());
         if(!font.getText().toString().isEmpty()){

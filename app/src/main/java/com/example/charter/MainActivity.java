@@ -5,8 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.PathUtils;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,15 +13,19 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.charter.display.barDisplayActivity;
+import com.example.charter.display.lineDispalyActivity;
+import com.example.charter.display.pieDisplayActivity;
+import com.example.charter.display.radarDisplayActivity;
+import com.example.charter.repository.barDataRepository;
+import com.example.charter.repository.lineDataRepository;
+import com.example.charter.repository.pieDataRepository;
+import com.example.charter.repository.radarDataRepository;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
@@ -40,16 +42,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.acl.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -166,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                 dataSet.setFillColor(Color.parseColor(tmp.getString("colour")));
                                 radarDataRepository.getInstance().getRadarData().addDataSet(dataSet);
                             }
-                            intent = new Intent(this,radarDisplayActivity.class);
+                            intent = new Intent(this, radarDisplayActivity.class);
                             startActivityForResult(intent,4);
                             break;
                         case "bar":
@@ -191,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             barDataRepository.calculateSpace(array.length());
 
-                            intent = new Intent(this,barDisplayActivity.class);
+                            intent = new Intent(this, barDisplayActivity.class);
                             startActivityForResult(intent,2);
                             /*ArrayList<BarEntry> entriesBar = new ArrayList<>();
                             JSONArray arrayXbar = bar.getJSONArray("x");
@@ -227,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                             pieDataRepository.getInstance().setEntries(entries);
                             pieDataRepository.getInstance().setColors(colors);
                             pieDataRepository.getInstance().setTypeAmountMap(typeAmountMap);
-                            intent = new Intent(this,pieDisplayActivity.class);
+                            intent = new Intent(this, pieDisplayActivity.class);
                             startActivityForResult(intent,3);
                             break;
                         case "line":

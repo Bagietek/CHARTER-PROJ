@@ -1,4 +1,4 @@
-package com.example.charter;
+package com.example.charter.config;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,44 +9,42 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.charter.R;
+import com.example.charter.repository.lineDataRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class radarConfigActivity extends AppCompatActivity {
-    Spinner titlesSpinner;
-    EditText dsc, fontSize, title;
-    CheckBox fill;
+public class lineConfigActivity extends AppCompatActivity {
+    EditText description, title, fontSize;
+    Spinner dataSets;
     Map<String, String> titles = new HashMap<>();
-    Map<String, Boolean> fills = new HashMap<>();
-    int spinnerSize;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_radar_config);
-        titlesSpinner = findViewById(R.id.radarSpinner);
-        fill = findViewById(R.id.radarFillCheck);
-        dsc = findViewById(R.id.radarDscConfig);
-        fontSize = findViewById(R.id.radarFont);
-        title = findViewById(R.id.radarLabelConfig);
-        spinnerSize = radarDataRepository.getInstance().getRadarData().getDataSetCount();
-        String[] list = new String[spinnerSize];
-        for (int i=0;i<spinnerSize;i++){
+        setContentView(R.layout.activity_line_config);
+        description = findViewById(R.id.lineDesc);
+        title = findViewById(R.id.lineTitle);
+        fontSize = findViewById(R.id.lineFontSize);
+        dataSets = findViewById(R.id.dataSetSpinner);
+        // spinner for data lines
+        final int size  = lineDataRepository.getInstance().chartData.getDataSetCount();
+
+        String[] list = new String[size];
+        for (int i=0;i<size;i++){
             list[i] = "Seria danych " + (i+1);
-            fills.put(list[i],false);
             titles.put(list[i],"");
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        titlesSpinner.setAdapter(adapter);
+        dataSets.setAdapter(adapter);
 
         title.addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,17 +60,22 @@ public class radarConfigActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 // save text to map
-                titles.remove(titlesSpinner.getSelectedItem().toString());
-                titles.put(titlesSpinner.getSelectedItem().toString(),title.getText().toString());
+                switch (dataSets.getSelectedItem().toString()){
+                    default:
+                        //String temp = titles.get(dataSets.getSelectedItem().toString());
+                        titles.remove(dataSets.getSelectedItem().toString());
+                        titles.put(dataSets.getSelectedItem().toString(),title.getText().toString());
+                        break;
+                }
             }
         });
 
-        titlesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        dataSets.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // change the line description accordingly
-                title.setText(titles.get(titlesSpinner.getSelectedItem().toString()));
-                fill.setChecked(fills.get(titlesSpinner.getSelectedItem().toString()));
+                title.setText(titles.get(dataSets.getSelectedItem().toString()));
             }
 
             @Override
@@ -80,33 +83,25 @@ public class radarConfigActivity extends AppCompatActivity {
                 // nothing
             }
         });
-
-        fill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                fills.remove(titlesSpinner.getSelectedItem().toString());
-                fills.put(titlesSpinner.getSelectedItem().toString(),fill.isChecked());
-            }
-        });
     }
 
 
+
+    //
     public void submitChanges(View view){
         Intent intent = new Intent();
-        intent.putExtra("dsc",dsc.getText().toString());
-        // titles
-        for (int i=0;i<spinnerSize;i++){
-            intent.putExtra("radarTitle"+i,titles.get("Seria danych " + (i+1)));
-            intent.putExtra("fill"+i,fills.get("Seria danych " + (i+1)));
+        intent.putExtra("dsc",description.getText().toString());
+        // line titles
+        for (int i=0;i<lineDataRepository.getInstance().chartData.getDataSetCount();i++){
+            intent.putExtra("lineTitle"+i,titles.get("Seria danych " + (i+1)));
         }
 
-        //font
         float size = 8f;
         if(!fontSize.getText().toString().isEmpty()){
             size = Float.parseFloat(fontSize.getText().toString());
         }
-        intent.putExtra("fontSize",size);
 
+        intent.putExtra("fontSize",size);
         setResult(Activity.RESULT_OK,intent);
         finish();
     }

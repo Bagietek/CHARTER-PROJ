@@ -1,6 +1,5 @@
-package com.example.charter;
+package com.example.charter.repository;
 
-import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
@@ -10,10 +9,10 @@ public class barDataRepository {
     private static barDataRepository instance;
     private ArrayList<BarEntry> entries;
     private ArrayList<IBarDataSet> dataSets;
-    static float groupSpace;
-    static float barSpace;
-    static float barWidth;
-    static boolean multiBar;
+    public static float groupSpace;
+    public static float barSpace;
+    public static float barWidth;
+    public static boolean multiBar;
 
     protected barDataRepository(){
         entries = new ArrayList<>();

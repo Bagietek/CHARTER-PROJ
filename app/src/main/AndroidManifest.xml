@@ -18,28 +18,28 @@
             android:name=".saveActivity"
             android:exported="false" />
         <activity
-            android:name=".radarConfigActivity"
+            android:name=".config.radarConfigActivity"
             android:exported="false" />
         <activity
-            android:name=".barConfigActivity"
+            android:name=".config.barConfigActivity"
             android:exported="false" />
         <activity
-            android:name=".lineConfigActivity"
+            android:name=".config.lineConfigActivity"
             android:exported="false" />
         <activity
-            android:name=".pieConfigActivity"
+            android:name=".config.pieConfigActivity"
             android:exported="false" />
         <activity
-            android:name=".radarDisplayActivity"
+            android:name=".display.radarDisplayActivity"
             android:exported="false" />
         <activity
-            android:name=".pieDisplayActivity"
+            android:name=".display.pieDisplayActivity"
             android:exported="false" />
         <activity
-            android:name=".barDisplayActivity"
+            android:name=".display.barDisplayActivity"
             android:exported="false" />
         <activity
-            android:name=".lineDispalyActivity"
+            android:name=".display.lineDispalyActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

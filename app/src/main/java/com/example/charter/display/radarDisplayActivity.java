@@ -1,34 +1,25 @@
-package com.example.charter;
+package com.example.charter.display;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.charter.R;
+import com.example.charter.config.radarConfigActivity;
+import com.example.charter.repository.radarDataRepository;
+import com.example.charter.saveActivity;
 import com.github.mikephil.charting.charts.RadarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.RadarData;
-import com.github.mikephil.charting.data.RadarDataSet;
-import com.github.mikephil.charting.data.RadarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class radarDisplayActivity extends AppCompatActivity {
     RadarChart radarChart;
@@ -136,12 +127,12 @@ public class radarDisplayActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                intent = new Intent(this,saveActivity.class);
+                intent = new Intent(this, saveActivity.class);
                 startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:
-                intent = new Intent(this,radarConfigActivity.class);
+                intent = new Intent(this, radarConfigActivity.class);
                 startActivityForResult(intent,editCode);
                 return true;
 

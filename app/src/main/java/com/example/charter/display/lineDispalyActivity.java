@@ -1,4 +1,4 @@
-package com.example.charter;
+package com.example.charter.display;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,16 +8,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.charter.R;
+import com.example.charter.config.lineConfigActivity;
+import com.example.charter.repository.lineDataRepository;
+import com.example.charter.saveActivity;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.data.LineData;
 
 import java.io.File;
 
@@ -53,12 +53,12 @@ public class lineDispalyActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.saveButton:
-                intent = new Intent(this,saveActivity.class);
+                intent = new Intent(this, saveActivity.class);
                 startActivityForResult(intent,saveCode);
                 return true;
 
             case R.id.configureButton:
-                intent = new Intent(this,lineConfigActivity.class);
+                intent = new Intent(this, lineConfigActivity.class);
                 startActivityForResult(intent,editCode);
                 return true;
 
